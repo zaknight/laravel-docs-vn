@@ -71,7 +71,7 @@ Bạn có thể đăng kí các listener sử dụng dấu wildcard `*`, cho ph�
 <a name="defining-events"></a>
 ## Tạo Events
 
-Một event class đơn giản chỉ là một data container chứa thông tin liên quan tới event. Ví dụ, giả dụ chúng ta có tạo ra event `PodcastWasPurchased` và nhận vào một [Eloquent ORM](/docs/{{version}}/eloquent):
+Một event class đơn giản chỉ là một data container chứa thông tin liên quan tới event. Ví dụ, giả dụ chúng ta có tạo ra event `PodcastWasPurchased` và nhận vào một [Eloquent ORM](/eloquent.md):
 
     <?php
 
@@ -136,7 +136,7 @@ Tiếp đến, hãy cùng nhau xem listener cho ví dụ về event ở trên. E
         }
     }
 
-Event listener cũng có thể được type-hint các dependency cần thiết trong hàm khởi tạo. Tất cả các event listener được resolve trên Laravel [service container](/docs/{{version}}/container), vì thế các dependency sẽ được inject vào tự động:
+Event listener cũng có thể được type-hint các dependency cần thiết trong hàm khởi tạo. Tất cả các event listener được resolve trên Laravel [service container](/container.md), vì thế các dependency sẽ được inject vào tự động:
 
     use Illuminate\Contracts\Mail\Mailer;
 
@@ -152,7 +152,7 @@ Thi thoảng, bạn muốn dừng chuyển tiếp event tới các listener khá
 <a name="queued-event-listeners"></a>
 ### Queued Event Listeners
 
-Bạn muốn [queue](/docs/{{version}}/queues) một event listener? Không còn gì đơn giản hơn. Đơn giản chỉ cần thêm vào `ShouldQueue` interface vào trong listener class. Listener được tạo bởi câu lệnh `event:generate` đã kèm sẵn interface import vào trong namespace, vì thế bạn chỉ cần sử dụng ngay và luôn:
+Bạn muốn [queue](/queues.md) một event listener? Không còn gì đơn giản hơn. Đơn giản chỉ cần thêm vào `ShouldQueue` interface vào trong listener class. Listener được tạo bởi câu lệnh `event:generate` đã kèm sẵn interface import vào trong namespace, vì thế bạn chỉ cần sử dụng ngay và luôn:
 
     <?php
 
@@ -166,7 +166,7 @@ Bạn muốn [queue](/docs/{{version}}/queues) một event listener? Không còn
         //
     }
 
-Chỉ thế thôi. Lúc này, khi mà listener này được gọi cho một event, nó sẽ tự động được queue bởi event dispatcher sử dụng [hệ thống queue](/docs/{{version}}/queues) của Laravel. Nếu không có exception nào bị bắn ra khi listener được xử lý bởi queue, thì queued job sẽ tự động được xoá sau khi được xử lý.
+Chỉ thế thôi. Lúc này, khi mà listener này được gọi cho một event, nó sẽ tự động được queue bởi event dispatcher sử dụng [hệ thống queue](/queues.md) của Laravel. Nếu không có exception nào bị bắn ra khi listener được xử lý bởi queue, thì queued job sẽ tự động được xoá sau khi được xử lý.
 
 #### Tự truy xuất vào trong queue
 
@@ -195,7 +195,7 @@ Nếu bạn cần truy xuất vào queue qua hai hàm `delete` và `release`, b�
 <a name="firing-events"></a>
 ## Firing Events
 
-Để bắn event, bạn có thể sử dụng `Event` [facade](/docs/{{version}}/facades), bằng cách truyền vào một instance của event vào trong hàm `fire`. Hàm `fire` sẽ dispatch event tới tất cả các listener đã được đăng kí:
+Để bắn event, bạn có thể sử dụng `Event` [facade](/facades.md), bằng cách truyền vào một instance của event vào trong hàm `fire`. Hàm `fire` sẽ dispatch event tới tất cả các listener đã được đăng kí:
 
     <?php
 
@@ -239,7 +239,7 @@ Trong nhiều ứng dụng web hiện đại ngày nay, web socket được sử
 <a name="broadcast-configuration"></a>
 ### Cấu hình
 
-Cấu hình để broadcast event được lưu trong `config/broadcasting.php`. Laravel hỗ trợ một số broadcast driver như [Pusher](https://pusher.com), [Redis](/docs/{{version}}/redis), và `log` driver cho môi trường phát triển và debug. Cấu hình ví dụ cho mỗi driver này đều kèm sẵn trong mỗi ứng dụng Laravel.
+Cấu hình để broadcast event được lưu trong `config/broadcasting.php`. Laravel hỗ trợ một số broadcast driver như [Pusher](https://pusher.com), [Redis](/redis.md), và `log` driver cho môi trường phát triển và debug. Cấu hình ví dụ cho mỗi driver này đều kèm sẵn trong mỗi ứng dụng Laravel.
 
 #### Yêu cầu cho broadcast
 
@@ -250,7 +250,7 @@ Các dependency sau cần thiết cho sử dụng event broadcasting:
 
 #### Yêu cầu về queue
 
-Trước khi broadcast event, bạn cũng cần cấu hình và chạy một [queue listener](/docs/{{version}}/queues). Tất cả các event broadcasting được thực hiện thông qua queued jobs vì thế thời gian response của ứng dụng không bị ảnh hưởng lớn lắm.
+Trước khi broadcast event, bạn cũng cần cấu hình và chạy một [queue listener](/queues.md). Tất cả các event broadcasting được thực hiện thông qua queued jobs vì thế thời gian response của ứng dụng không bị ảnh hưởng lớn lắm.
 
 <a name="marking-events-for-broadcast"></a>
 ### Đánh dấu event cho Broadcast
@@ -293,7 +293,7 @@ Trước khi broadcast event, bạn cũng cần cấu hình và chạy một [qu
         }
     }
 
-Sau đó, bạn chỉ cần [bắn event](#firing-events) như thông thường. Khi mà event đã được bắn ra, một [queued job](/docs/{{version}}/queues) sẽ tự động broadcast event qua broadcast driver đã cấu hình.
+Sau đó, bạn chỉ cần [bắn event](#firing-events) như thông thường. Khi mà event đã được bắn ra, một [queued job](/queues.md) sẽ tự động broadcast event qua broadcast driver đã cấu hình.
 
 <a name="broadcast-data"></a>
 ### Broadcast Data
